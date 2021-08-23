@@ -19,11 +19,8 @@ add_executable(simple
 
 target_link_libraries(simple ${CMAKE_PROJECT_NAME})
 
-enable_testing()
-
 set(CATCH_BUILD_STATIC_LIBRARY CACHE BOOL ON) 
-add_subdirectory(3rdparty/catch2)
-include_directories(TestHeader 3rdparty/catch2/single_include)
+add_subdirectory(${CMAKE_SOURCE_DIR}/3rdparty/catch2)
 
-add_executable(TestHeader tests/TestHeader.cpp)
-target_link_libraries(TestHeader Catch2 CatchWithMain)
+add_subdirectory(tests)
+
