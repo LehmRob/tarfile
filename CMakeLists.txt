@@ -22,5 +22,6 @@ target_link_libraries(simple ${CMAKE_PROJECT_NAME})
 set(CATCH_BUILD_STATIC_LIBRARY CACHE BOOL ON) 
 add_subdirectory(${CMAKE_SOURCE_DIR}/3rdparty/catch2)
 
+enable_testing()
 add_subdirectory(tests)
 
