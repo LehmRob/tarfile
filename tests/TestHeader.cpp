@@ -8,6 +8,6 @@
 
 #include <array>
 
-#include "testheader.h"
+#include "hello.tar.h"
 
 TEST_CASE("Test if testframework works", "[HEADER]") { REQUIRE(1 == 1); }
