@@ -3,24 +3,25 @@
 // SPDX-License-Identifier: MIT
 //
 
-#include "Header.hpp"
+#include "Header.h"
 
 #include <array>
+#include <cstdio>
+#include <iostream>
 #include <string>
-
-#include "memcpy.hpp"
 
 namespace tarfile {
 
-Header Header::construct(std::array<char, k_blockSize> block) {
+Header Header::construct(const char block[], size_t size = 512) {
     Header h;
 
-    memcpy(h._name, block, h._name.size());
-    memcpy(h._gname, block, h._gname.size(), 100);
+    h.name_ = std::string(block, 100);
+    h.mode_ = std::stoul(std::string(&block[100], 8), nullptr, 8);
+    h.uid_ = std::stoi(std::string(&block[108], 8));
+    h.gid_ = std::stoul(std::string(&block[116], 8));
+    h.size_ = std::stoul(std::string(&block[124], 12));
 
     return h;
 }
-
-std::string Header::str() { return ""; }
 
 } // namespace tarfile
