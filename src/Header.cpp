@@ -5,14 +5,17 @@
 
 #include "Header.h"
 
-#include <array>
 #include <cstdio>
 #include <iostream>
 #include <string>
 
 namespace tarfile {
 
-Header Header::construct(const char block[], size_t size = 512) {
+static HeaderFileType convert(char typeflag) {
+    return static_cast<HeaderFileType>(typeflag);
+}
+
+Header Header::construct(const char block[]) {
     Header h;
 
     h.name_ = std::string(block, 100);
@@ -20,6 +23,9 @@ Header Header::construct(const char block[], size_t size = 512) {
     h.uid_ = std::stoi(std::string(&block[108], 8));
     h.gid_ = std::stoul(std::string(&block[116], 8));
     h.size_ = std::stoul(std::string(&block[124], 12));
+    h.mtime_ = std::stoull(std::string(&block[136], 12));
+    h.chksum_ = std::stoul(std::string(&block[148], 8));
+    h.typeflag_ = convert(block[156]);
 
     return h;
 }

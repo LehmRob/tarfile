@@ -1,8 +1,9 @@
+#pragma once
+
 // Copyright (c) 2021 Robert Lehmann <lehmrob@posteo.net>
 //
 // SPDX-License-Identifier: MIT
 //
-#pragma once
 
 #include <array>
 #include <cstdint>
@@ -10,25 +11,41 @@
 
 namespace tarfile {
 
+enum class HeaderFileType : char {
+    NormalFile = '0',
+    HardLink = '1',
+    SymbolicLink = '2',
+    CharacterSpecial = '3',
+    BlockSpecial = '4',
+    Directory = '5',
+    Fifo = '6',
+};
+
 // The header structure is taken from the gnu header file tar.h
-struct Header {
-    static Header construct(const char[], size_t);
+class Header {
+  public:
+    Header() = default;
+    static Header construct(const char[]);
 
     std::string name() { return name_; }
-    uint64_t mode() { return mode_; }
+    std::uint64_t mode() { return mode_; }
     int uid() { return uid_; }
     int gid() { return gid_; }
-    uint64_t size() { return size_; }
+    std::uint64_t size() { return size_; }
+    std::uint64_t mtime() { return mtime_; }
+    std::uint32_t checksum() { return chksum_; }
+    HeaderFileType typeflag() { return typeflag_; }
 
+  private:
     // Basicheader complex
-    std::string name_;       // h[0] - 100
-    std::uint32_t mode_ = 0; // h[100] - 8
-    int uid_;                // h[108] - 8
-    int gid_;                // h[116] - 8
-    std::uint64_t size_;     // h[124] - 12
-    std::array<char, 12> mtime_;
-    std::array<char, 8> chksum_;
-    char typeflag_;
+    std::string name_;        // h[0] - 100
+    std::uint32_t mode_ = 0;  // h[100] - 8
+    int uid_;                 // h[108] - 8
+    int gid_;                 // h[116] - 8
+    std::uint64_t size_;      // h[124] - 12
+    std::uint64_t mtime_;     // h[136] - 12
+    std::uint32_t chksum_;    // h[148] - 8
+    HeaderFileType typeflag_; // h[156] - 1
     std::array<char, 100> linkname_;
     // after here its get magic
     std::array<char, 6> magic_;
