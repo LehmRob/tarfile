@@ -11,6 +11,10 @@
 
 namespace tarfile {
 
-TarFile TarFile::constructFromFile(const char *filename) {}
+// TarFile TarFile::constructFromFile(const char *filename) {
+//     TarFile t;
+
+//     return t;
+// }
 
 } // namespace tarfile

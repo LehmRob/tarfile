@@ -16,7 +16,7 @@ class TarFile {
   public:
     TarFile(Header &header) : _header(header) {}
 
-    static TarFile constructFromFile(const char *file);
+    static TarFile constructFromFile(const char file[]);
 
   private:
     Header _header;
