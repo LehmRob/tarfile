@@ -15,11 +15,14 @@
 using Catch::Matchers::Contains;
 
 TEST_CASE("Test if testframework works", "[HEADER]") {
-    auto header = tarfile::Header::construct(hello_data, 512);
+    auto header = tarfile::Header::construct(hello_data);
 
     REQUIRE_THAT(header.name(), Contains("hello.txt"));
     REQUIRE(header.mode() == 0644);
     REQUIRE(header.uid() == 1750);
     REQUIRE(header.gid() == 1750);
     REQUIRE(header.size() == 15);
+    REQUIRE(header.mtime() == 14106237313);
+    REQUIRE(header.checksum() == 12560);
+    REQUIRE(header.typeflag() == tarfile::HeaderFileType::NormalFile);
 }
