@@ -34,3 +34,7 @@
 # Build directories
 
 build*/
+
+.vscode/
+CMakeCache.txt
+CMakeFiles/
