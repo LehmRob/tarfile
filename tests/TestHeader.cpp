@@ -7,6 +7,7 @@
 #include <catch2/catch.hpp>
 
 #include <array>
+#include <cstdio>
 
 #include "../src/Header.h"
 
@@ -25,4 +26,7 @@ TEST_CASE("Test if testframework works", "[HEADER]") {
     REQUIRE(header.mtime() == 14106237313);
     REQUIRE(header.checksum() == 12560);
     REQUIRE(header.typeflag() == tarfile::HeaderFileType::NormalFile);
+    REQUIRE(header.linkname()[0] == '\0');
+    // REQUIRE(header.magic() == "ustar");
+    REQUIRE_THAT(header.magic(), Contains("ustar"));
 }

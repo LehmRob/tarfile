@@ -24,7 +24,6 @@ enum class HeaderFileType : char {
 // The header structure is taken from the gnu header file tar.h
 class Header {
   public:
-    Header() = default;
     static Header construct(const char[]);
 
     std::string name() { return name_; }
@@ -35,8 +34,12 @@ class Header {
     std::uint64_t mtime() { return mtime_; }
     std::uint32_t checksum() { return chksum_; }
     HeaderFileType typeflag() { return typeflag_; }
+    std::string linkname() { return linkname_; }
+    std::string magic() { return magic_; }
 
   private:
+    Header() = default;
+
     // Basicheader complex
     std::string name_;        // h[0] - 100
     std::uint32_t mode_ = 0;  // h[100] - 8
@@ -46,9 +49,9 @@ class Header {
     std::uint64_t mtime_;     // h[136] - 12
     std::uint32_t chksum_;    // h[148] - 8
     HeaderFileType typeflag_; // h[156] - 1
-    std::array<char, 100> linkname_;
+    std::string linkname_;    // h[157] - 100
+    std::string magic_;       // h[257] - 6
     // after here its get magic
-    std::array<char, 6> magic_;
     std::array<char, 2> version_;
     std::array<char, 32> uname_;
     std::array<char, 32> gname_;

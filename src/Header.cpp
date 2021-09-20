@@ -26,6 +26,8 @@ Header Header::construct(const char block[]) {
     h.mtime_ = std::stoull(std::string(&block[136], 12));
     h.chksum_ = std::stoul(std::string(&block[148], 8));
     h.typeflag_ = convert(block[156]);
+    h.linkname_ = std::string(&block[157], 100);
+    h.magic_ = std::string(&block[257], 6);
 
     return h;
 }
